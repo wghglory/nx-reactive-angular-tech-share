@@ -1,0 +1,9 @@
+<clr-alert *ngIf="error; else loading" [clrAlertType]="'danger'" [clrAlertSizeSmall]="alertSmall">
+  <clr-alert-item>
+    <span class="alert-text" role="alert">{{ error.message }}</span>
+  </clr-alert-item>
+</clr-alert>
+
+<ng-template #loading>
+  <seed-spinner [spinnerSize]="spinnerSize" [spinnerCenter]="spinnerCenter"></seed-spinner>
+</ng-template>
