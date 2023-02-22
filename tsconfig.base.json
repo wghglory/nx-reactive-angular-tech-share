@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@rx/core/ui": ["libs/core/ui/src/index.ts"],
+      "@rx/feature/hero": ["libs/feature/hero/src/index.ts"],
       "@rx/feature/product": ["libs/feature/product/src/index.ts"],
       "@rx/shared/models": ["libs/shared/models/src/index.ts"],
       "@rx/shared/ui": ["libs/shared/ui/src/index.ts"],
