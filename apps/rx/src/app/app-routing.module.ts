@@ -9,6 +9,10 @@ const routes: Route[] = [
     component: WelcomeComponent,
   },
   {
+    path: 'heroes',
+    loadChildren: () => import('@rx/feature/hero').then(m => m.HeroModule),
+  },
+  {
     path: 'products',
     children: productRoutes,
   },

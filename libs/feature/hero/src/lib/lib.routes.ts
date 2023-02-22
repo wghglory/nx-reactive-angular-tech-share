@@ -1,3 +1,10 @@
 import { Route } from '@angular/router';
 
-export const heroRoutes: Route[] = [];
+import { HeroListComponent } from './pages/hero-list/hero-list.component';
+
+export const heroRoutes: Route[] = [
+  {
+    path: '',
+    component: HeroListComponent,
+  },
+];
