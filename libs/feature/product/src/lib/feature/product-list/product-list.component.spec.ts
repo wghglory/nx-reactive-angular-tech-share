@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoadingOrErrorComponent } from '@seed/shared/ui';
+import { LoadingOrErrorComponent } from '@rx/shared/ui';
 import { createMock, Mock, provideMock } from '@testing-library/angular/jest-utils';
 import { MockComponent, MockService } from 'ng-mocks';
 import { of } from 'rxjs';

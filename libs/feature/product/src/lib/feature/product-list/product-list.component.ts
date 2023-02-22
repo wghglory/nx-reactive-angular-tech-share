@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ClarityModule } from '@clr/angular';
-import { LoadingOrErrorComponent } from '@seed/shared/ui';
+import { LoadingOrErrorComponent } from '@rx/shared/ui';
 import { BehaviorSubject, catchError, EMPTY, Subject, switchMap } from 'rxjs';
 
 import { Product } from '../../models/product';
@@ -12,7 +12,7 @@ import { ProductService } from '../../services/product.service';
 import { ProductDeleteComponent } from '../../ui/product-delete/product-delete.component';
 
 @Component({
-  selector: 'seed-product-list',
+  selector: 'rx-product-list',
   standalone: true,
   imports: [CommonModule, RouterModule, ClarityModule, FormsModule, LoadingOrErrorComponent, ProductDeleteComponent],
   templateUrl: './product-list.component.html',

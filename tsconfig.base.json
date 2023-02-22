@@ -15,11 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@seed/core/ui": ["libs/core/ui/src/index.ts"],
-      "@seed/feature/product": ["libs/feature/product/src/index.ts"],
-      "@seed/shared/models": ["libs/shared/models/src/index.ts"],
-      "@seed/shared/ui": ["libs/shared/ui/src/index.ts"],
-      "@seed/shared/utils": ["libs/shared/utils/src/index.ts"]
+      "@rx/core/ui": ["libs/core/ui/src/index.ts"],
+      "@rx/feature/product": ["libs/feature/product/src/index.ts"],
+      "@rx/shared/models": ["libs/shared/models/src/index.ts"],
+      "@rx/shared/ui": ["libs/shared/ui/src/index.ts"],
+      "@rx/shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { NavbarComponent } from '@seed/core/ui';
+import { NavbarComponent } from '@rx/core/ui';
 import { MockComponent } from 'ng-mocks';
 
 import { AppComponent } from './app.component';
@@ -17,9 +17,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'seed'`, () => {
+  it(`should have as title 'rx'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('seed');
+    expect(app.title).toEqual('rx');
   });
 });

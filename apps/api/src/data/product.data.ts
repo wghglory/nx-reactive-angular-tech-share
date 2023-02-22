@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Product } from '@seed/feature/product';
+import { Product } from '@rx/feature/product';
 
 const initial: Product[] = [
   {

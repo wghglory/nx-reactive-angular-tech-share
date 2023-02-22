@@ -29,7 +29,7 @@ Convert to API HttpParams =>
 {page: 1, pageSize: 10, filter: 'name==*aaa*;productionDate==*bbb*', sortAsc: 'description'}
 */
 import { ClrDatagridStateInterface } from '@clr/angular';
-import { PageQuery } from '@seed/shared/models';
+import { PageQuery } from '@rx/shared/models';
 import { isEmpty, pickBy } from 'lodash';
 
 const DEFAULT_PAGE_SIZE = 10;

@@ -6,7 +6,7 @@ import { ClarityModule } from '@clr/angular';
 import { SpinnerComponent } from './../spinner/spinner.component';
 
 @Component({
-  selector: 'seed-loading-or-error',
+  selector: 'rx-loading-or-error',
   standalone: true,
   imports: [CommonModule, ClarityModule, SpinnerComponent],
   templateUrl: './loading-or-error.component.html',

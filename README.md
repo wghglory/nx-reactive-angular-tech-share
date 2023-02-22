@@ -1,9 +1,9 @@
-# Seed
+# Rx
 
 ## How to generate this repo?
 
 1. npx create-nx-workspace@15.6.1
-2. repository name: seed; application name: seed
+2. repository name: rx; application name: rx
 3. add clarity
 4. generate tailwind
 5. add `@nrwl/express`, and generate api express server
@@ -24,7 +24,13 @@
 
 ## TODO after download this template
 
-Replace seed to your project name.
+Replace rx to your project name.
+
+- Get APIKEY from [developer.marvel.com](https://developer.marvel.com/)
+  - Go to [https://developer.marvel.com/](https://developer.marvel.com/)
+  - Create a developer account
+  - Add `localhost` to the `Your Authorized Referers` section
+  - Add your public and private keys into `.env` files
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -32,7 +38,7 @@ Replace seed to your project name.
 
 ## Development server
 
-Run `nx serve seed` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve rx` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
 ## Understand this workspace
 

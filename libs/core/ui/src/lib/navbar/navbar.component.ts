@@ -7,7 +7,7 @@ import { ClarityModule } from '@clr/angular';
 ClarityIcons.addIcons(cogIcon, vmBugIcon);
 
 @Component({
-  selector: 'seed-navbar',
+  selector: 'rx-navbar',
   standalone: true,
   imports: [CommonModule, ClarityModule, RouterModule],
   templateUrl: './navbar.component.html',

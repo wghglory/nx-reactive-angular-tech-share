@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { productRoutes } from '@seed/feature/product';
-import { WelcomeComponent } from '@seed/shared/ui';
+import { productRoutes } from '@rx/feature/product';
+import { WelcomeComponent } from '@rx/shared/ui';
 
 const routes: Route[] = [
   {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoadingOrErrorComponent } from '@seed/shared/ui';
+import { LoadingOrErrorComponent } from '@rx/shared/ui';
 import { createMock, provideMock } from '@testing-library/angular/jest-utils';
 import { MockComponent, MockService } from 'ng-mocks';
 import { of } from 'rxjs';

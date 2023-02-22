@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingOrErrorComponent } from '@seed/shared/ui';
+import { LoadingOrErrorComponent } from '@rx/shared/ui';
 import { catchError, EMPTY, Subject, switchMap } from 'rxjs';
 
 import { ProductService } from '../../services/product.service';
 
 @Component({
-  selector: 'seed-product-detail',
+  selector: 'rx-product-detail',
   standalone: true,
   imports: [CommonModule, LoadingOrErrorComponent],
   templateUrl: './product-detail.component.html',

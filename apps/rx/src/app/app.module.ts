@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ClarityModule } from '@clr/angular';
-import { NavbarComponent } from '@seed/core/ui';
+import { NavbarComponent } from '@rx/core/ui';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

@@ -5,7 +5,7 @@ Convert to API HttpParams =>
 
 {page: 1, pageSize: 9, filter: 'name==*aaa*;productionDate==*bbb*', sortAsc: 'description'}
 */
-import { PageQuery } from '@seed/shared/models';
+import { PageQuery } from '@rx/shared/models';
 import { pickBy } from 'lodash';
 
 const DEFAULT_PAGE_SIZE = 9;

@@ -1,11 +1,11 @@
 {
-  "name": "seed",
+  "name": "rx",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "api": "npx nx serve api",
-    "dev": "npx nx serve seed",
-    "start": "npm run api & npm run seed",
+    "dev": "npx nx serve rx",
+    "start": "npm run api & npm run rx",
     "test": "npx nx run-many --all --target=test --parallel",
     "e2e": "npx nx run dp-e2e:e2e --headed=false --watch",
     "prettier": "prettier --config ./.prettierrc  --write --list-different '{apps,libs,mock}/**/*{.ts,.js,.json,.css,.scss,.md,.html}'",

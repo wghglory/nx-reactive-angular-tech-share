@@ -9,7 +9,7 @@ import { catchError, EMPTY, finalize, Subject, switchMap, tap } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 
 @Component({
-  selector: 'seed-product-add',
+  selector: 'rx-product-add',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, ClarityModule],
   templateUrl: './product-add.component.html',

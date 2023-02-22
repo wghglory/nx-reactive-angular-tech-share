@@ -8,7 +8,7 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 
 @Component({
-  selector: 'seed-product-delete',
+  selector: 'rx-product-delete',
   standalone: true,
   imports: [CommonModule, ClarityModule],
   templateUrl: './product-delete.component.html',

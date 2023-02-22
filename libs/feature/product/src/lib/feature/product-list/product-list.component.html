@@ -16,12 +16,12 @@
 </ul>
 
 <ng-template #loadingOrError>
-  <seed-loading-or-error [error]="error$ | async"></seed-loading-or-error>
+  <rx-loading-or-error [error]="error$ | async"></rx-loading-or-error>
 </ng-template>
 
-<seed-product-delete
+<rx-product-delete
   *ngIf="openDeleteDialog && selectedProduct"
   [product]="selectedProduct"
   [(open)]="openDeleteDialog"
   (refreshData)="refreshData()"
-></seed-product-delete>
+></rx-product-delete>

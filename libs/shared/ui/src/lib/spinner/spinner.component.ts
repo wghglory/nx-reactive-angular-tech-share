@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ClarityModule } from '@clr/angular';
 
 @Component({
-  selector: 'seed-spinner',
+  selector: 'rx-spinner',
   standalone: true,
   imports: [CommonModule, ClarityModule],
   templateUrl: './spinner.component.html',

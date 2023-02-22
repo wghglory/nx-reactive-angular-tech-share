@@ -1,4 +1,4 @@
-import { Product } from '@seed/feature/product';
+import { Product } from '@rx/feature/product';
 import express from 'express';
 
 import { products } from '../data/product.data';
