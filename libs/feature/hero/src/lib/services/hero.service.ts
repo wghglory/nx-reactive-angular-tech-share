@@ -56,14 +56,11 @@ export class HeroService {
   limit$ = this.stateBS.pipe(map(state => state.limit));
   loading$ = this.loadingBS.asObservable();
 
-  private changes$ = combineLatest([
-    this.search$.pipe(debounceTime(500), distinctUntilChanged()),
-    this.page$.pipe(debounceTime(500), distinctUntilChanged()),
-    this.limit$.pipe(distinctUntilChanged()),
-  ]);
+  private changes$ = combineLatest([this.search$.pipe(map(search => search.trim())), this.page$, this.limit$]);
 
   private heroResponse$ = this.changes$.pipe(
-    // debounceTime(500),
+    debounceTime(500),
+    distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
     tap(() => this.loadingBS.next(true)),
     switchMap(([searchTerm, page, limit]) => {
       const params: Partial<HeroParam> = {
