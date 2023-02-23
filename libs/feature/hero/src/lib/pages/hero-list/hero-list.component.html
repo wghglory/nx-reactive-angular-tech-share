@@ -29,5 +29,5 @@
 </section>
 
 <section class="mt-10 flex flex-wrap gap-6">
-  <rx-hero-badge *ngFor="let hero of heroes" [hero]="hero"></rx-hero-badge>
+  <rx-hero-badge *ngFor="let hero of heroes$ | async" [hero]="hero"></rx-hero-badge>
 </section>

@@ -1,40 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { Hero } from '../../models/hero.model';
 import { HeroService } from './../../services/hero.service';
 
 @Component({
   selector: 'rx-hero-list',
   templateUrl: './hero-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroListComponent implements OnInit, OnDestroy {
+export class HeroListComponent {
+  // Benefits:
+  // 1. less code in component
+  // 2. performance due to changeDetection.OnPush
+  // 3. when service changes to ngrx, component code doesn't need any change
+  // 4. switchMap cancel previous requests
   constructor(public heroService: HeroService) {}
 
-  heroes: Hero[] = [];
-  searchTerm = '';
-  destroyer$ = new Subject<void>();
-
-  ngOnInit() {
-    this.heroService
-      .getHeroes()
-      .pipe(takeUntil(this.destroyer$))
-      .subscribe(res => {
-        this.heroes = res;
-      });
-  }
+  heroes$ = this.heroService.heroes$;
 
   doSearch(searchTerm: string) {
-    this.heroService
-      .getHeroes(searchTerm)
-      .pipe(takeUntil(this.destroyer$))
-      .subscribe(res => {
-        this.heroes = res;
-      });
-  }
-
-  ngOnDestroy() {
-    this.destroyer$.next();
-    this.destroyer$.complete();
+    this.heroService.changeSearch(searchTerm);
   }
 }
