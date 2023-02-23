@@ -1,1 +1,33 @@
 <h2>Heroes</h2>
+
+<section class="my-6 flex items-center justify-between">
+  <clr-input-container class="mt-0 flex flex-row">
+    <label>Search</label>
+    <input clrInput class="ml-2" (input)="doSearch($any($event.target).value)" />
+  </clr-input-container>
+
+  <span>
+    <label class="font-semibold">Page ? of ? </label>
+    <span class="btn-group btn-outline ml-2">
+      <button class="btn">Prev</button>
+      <button class="btn">Next</button>
+    </span>
+  </span>
+
+  <span>
+    <label class="font-semibold">Page Limit</label>
+    <span class="btn-group btn-outline ml-2">
+      <button *ngFor="let limit of heroService.limits" class="btn">
+        {{ limit }}
+      </button>
+    </span>
+  </span>
+
+  <span>
+    <label class="font-semibold">Total Results: ???</label>
+  </span>
+</section>
+
+<section class="mt-10 flex flex-wrap gap-6">
+  <rx-hero-badge *ngFor="let hero of heroes" [hero]="hero"></rx-hero-badge>
+</section>
