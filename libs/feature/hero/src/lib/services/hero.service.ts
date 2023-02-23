@@ -1,6 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, debounceTime, delay, map, Observable, of, share, shareReplay, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  finalize,
+  map,
+  Observable,
+  of,
+  share,
+  shareReplay,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { heroMockResponse } from '../mock-data';
 import { Hero } from '../models/hero.model';
@@ -35,15 +49,22 @@ export class HeroService {
   limits = LIMITS;
 
   private stateBS = new BehaviorSubject(DEFAULT_STATE);
+  private loadingBS = new BehaviorSubject(false);
 
   search$ = this.stateBS.pipe(map(state => state.search));
   page$ = this.stateBS.pipe(map(state => state.page));
   limit$ = this.stateBS.pipe(map(state => state.limit));
+  loading$ = this.loadingBS.asObservable();
 
-  private changes$ = combineLatest([this.search$, this.page$, this.limit$]);
+  private changes$ = combineLatest([
+    this.search$.pipe(debounceTime(500), distinctUntilChanged()),
+    this.page$.pipe(debounceTime(500), distinctUntilChanged()),
+    this.limit$.pipe(distinctUntilChanged()),
+  ]);
 
   private heroResponse$ = this.changes$.pipe(
-    debounceTime(500),
+    // debounceTime(500),
+    tap(() => this.loadingBS.next(true)),
     switchMap(([searchTerm, page, limit]) => {
       const params: Partial<HeroParam> = {
         apikey: process.env['NX_MARVEL_PUBLIC_KEY'] || '',
@@ -57,7 +78,11 @@ export class HeroService {
       // return of(heroMockResponse).pipe(
       //   delay(500),
       // );
-      return this.http.get<MarvelResponse>(HERO_API, { params });
+      return this.http.get<MarvelResponse>(HERO_API, { params }).pipe(
+        finalize(() => {
+          this.loadingBS.next(false);
+        }),
+      );
     }),
     shareReplay(1),
   );

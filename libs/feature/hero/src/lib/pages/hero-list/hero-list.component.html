@@ -29,7 +29,10 @@
     </span>
   </section>
 
-  <section class="mt-10 flex flex-wrap gap-6">
-    <rx-hero-badge *ngFor="let hero of vm.heroes" [hero]="hero"></rx-hero-badge>
-  </section>
+  <rx-spinner *ngIf="vm.loading; else heroData"></rx-spinner>
+  <ng-template #heroData>
+    <section class="mt-10 flex flex-wrap gap-6">
+      <rx-hero-badge *ngFor="let hero of vm.heroes" [hero]="hero"></rx-hero-badge>
+    </section>
+  </ng-template>
 </ng-container>

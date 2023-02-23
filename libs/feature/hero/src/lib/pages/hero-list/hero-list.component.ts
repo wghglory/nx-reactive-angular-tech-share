@@ -24,8 +24,9 @@ export class HeroListComponent {
     this.heroService.limit$,
     this.heroService.totalPage$,
     this.heroService.totalResult$,
+    this.heroService.loading$,
   ]).pipe(
-    map(([heroes, search, page, limit, totalPage, totalResult]) => {
+    map(([heroes, search, page, limit, totalPage, totalResult, loading]) => {
       return {
         heroes,
         search,
@@ -37,6 +38,7 @@ export class HeroListComponent {
         disablePrev: page === 0,
         disableNext: page + 1 === totalPage,
         limits: this.heroService.limits,
+        loading,
       };
     }),
   );
