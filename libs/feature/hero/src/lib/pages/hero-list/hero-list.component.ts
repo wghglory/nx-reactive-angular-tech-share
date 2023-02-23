@@ -16,8 +16,4 @@ export class HeroListComponent {
   constructor(public heroService: HeroService) {}
 
   heroes$ = this.heroService.heroes$;
-
-  doSearch(searchTerm: string) {
-    this.heroService.changeSearch(searchTerm);
-  }
 }

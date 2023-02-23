@@ -3,28 +3,39 @@
 <section class="my-6 flex items-center justify-between">
   <clr-input-container class="mt-0 flex flex-row">
     <label>Search</label>
-    <input clrInput class="ml-2" (input)="doSearch($any($event.target).value)" />
+    <input clrInput class="ml-2" [value]="heroService.search$ | async" (input)="heroService.changeSearch($any($event.target).value)" />
   </clr-input-container>
 
   <span>
-    <label class="font-semibold">Page ? of ? </label>
+    <label class="font-semibold">Page {{ heroService.userPage$ | async }} of {{ heroService.totalPage$ | async }} </label>
     <span class="btn-group btn-outline ml-2">
-      <button class="btn">Prev</button>
-      <button class="btn">Next</button>
+      <button class="btn" (click)="heroService.changePage(-1)" [disabled]="(heroService.page$ | async) === 0">Prev</button>
+      <button
+        class="btn"
+        (click)="heroService.changePage(1)"
+        [disabled]="(heroService.totalPage$ | async) === (heroService.userPage$ | async)"
+      >
+        Next
+      </button>
     </span>
   </span>
 
   <span>
     <label class="font-semibold">Page Limit</label>
     <span class="btn-group btn-outline ml-2">
-      <button *ngFor="let limit of heroService.limits" class="btn">
+      <button
+        class="btn"
+        *ngFor="let limit of heroService.limits"
+        (click)="heroService.changeLimit(limit)"
+        [disabled]="limit === (heroService.limit$ | async)"
+      >
         {{ limit }}
       </button>
     </span>
   </span>
 
   <span>
-    <label class="font-semibold">Total Results: ???</label>
+    <label class="font-semibold">Total Results: {{ heroService.totalResult$ | async }}</label>
   </span>
 </section>
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, delay, map, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, delay, map, Observable, of, shareReplay, switchMap } from 'rxjs';
 
 import { heroMockResponse } from '../mock-data';
 import { Hero } from '../models/hero.model';
@@ -37,17 +37,17 @@ export class HeroService {
   private limitBS = new BehaviorSubject(DEFAULT_LIMIT);
 
   search$ = this.searchBS.asObservable();
-  private page$ = this.pageBS.asObservable();
+  page$ = this.pageBS.asObservable();
   userPage$ = this.page$.pipe(map(page => page + 1));
   limit$ = this.limitBS.asObservable();
 
-  private changes$ = combineLatest([this.search$, this.page$, this.limit$]).pipe();
+  private changes$ = combineLatest([this.search$, this.page$, this.limit$]);
 
-  heroes$ = this.changes$.pipe(
+  private heroResponse$ = this.changes$.pipe(
     switchMap(([searchTerm, page, limit]) => {
       const params: Partial<HeroParam> = {
         apikey: process.env['NX_MARVEL_PUBLIC_KEY'] || '',
-        limit: DEFAULT_LIMIT,
+        limit,
         offset: page * limit,
       };
       if (searchTerm) {
@@ -56,13 +56,29 @@ export class HeroService {
 
       // return of(heroMockResponse).pipe(
       //   delay(500),
-      //   map((res: MarvelResponse) => res.data.results),
       // );
-      return this.http.get<MarvelResponse>(HERO_API, { params }).pipe(map((res: MarvelResponse) => res.data.results));
+      return this.http.get<MarvelResponse>(HERO_API, { params });
     }),
+    shareReplay(1),
   );
 
+  // derived states, like ngrx selector
+  heroes$ = this.heroResponse$.pipe(map(res => res.data.results));
+  totalResult$ = this.heroResponse$.pipe(map(res => res.data.total));
+  totalPage$ = combineLatest([this.totalResult$, this.limit$]).pipe(map(([total, limit]) => Math.ceil(total / limit)));
+
   changeSearch(searchTerm: string) {
+    // like ngrx dispatch an action, or react setState() but without batch update
     this.searchBS.next(searchTerm);
+    this.pageBS.next(0);
+  }
+
+  changePage(moveBy: number) {
+    this.pageBS.next(this.pageBS.value + moveBy);
+  }
+
+  changeLimit(limit: number) {
+    this.limitBS.next(limit);
+    this.pageBS.next(0);
   }
 }
