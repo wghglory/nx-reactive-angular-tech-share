@@ -13,9 +13,11 @@ const LIMIT_MID = 25;
 const LIMIT_HIGH = 100;
 const LIMITS = [LIMIT_LOW, LIMIT_MID, LIMIT_HIGH];
 
-const DEFAULT_LIMIT = LIMIT_MID;
-const DEFAULT_SEARCH = '';
-const DEFAULT_PAGE = 0;
+const DEFAULT_STATE = {
+  search: '',
+  page: 0,
+  limit: LIMIT_MID,
+};
 
 interface HeroParam {
   apikey: string;
@@ -32,14 +34,11 @@ export class HeroService {
 
   limits = LIMITS;
 
-  private searchBS = new BehaviorSubject(DEFAULT_SEARCH);
-  private pageBS = new BehaviorSubject(DEFAULT_PAGE);
-  private limitBS = new BehaviorSubject(DEFAULT_LIMIT);
+  private stateBS = new BehaviorSubject(DEFAULT_STATE);
 
-  search$ = this.searchBS.asObservable();
-  page$ = this.pageBS.asObservable();
-  userPage$ = this.page$.pipe(map(page => page + 1));
-  limit$ = this.limitBS.asObservable();
+  search$ = this.stateBS.pipe(map(state => state.search));
+  page$ = this.stateBS.pipe(map(state => state.page));
+  limit$ = this.stateBS.pipe(map(state => state.limit));
 
   private changes$ = combineLatest([this.search$, this.page$, this.limit$]);
 
@@ -68,18 +67,26 @@ export class HeroService {
   totalResult$ = this.heroResponse$.pipe(map(res => res.data.total));
   totalPage$ = combineLatest([this.totalResult$, this.limit$]).pipe(map(([total, limit]) => Math.ceil(total / limit)));
 
-  changeSearch(searchTerm: string) {
-    // like ngrx dispatch an action, or react setState() but without batch update
-    this.searchBS.next(searchTerm);
-    this.pageBS.next(0);
+  changeSearch(search: string) {
+    this.stateBS.next({
+      ...this.stateBS.value,
+      search,
+      page: 0,
+    });
   }
 
   changePage(moveBy: number) {
-    this.pageBS.next(this.pageBS.value + moveBy);
+    this.stateBS.next({
+      ...this.stateBS.value,
+      page: this.stateBS.value.page + moveBy,
+    });
   }
 
   changeLimit(limit: number) {
-    this.limitBS.next(limit);
-    this.pageBS.next(0);
+    this.stateBS.next({
+      ...this.stateBS.value,
+      limit,
+      page: 0,
+    });
   }
 }
