@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, delay, map, Observable, of, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, debounceTime, delay, map, Observable, of, share, shareReplay, switchMap } from 'rxjs';
 
 import { heroMockResponse } from '../mock-data';
 import { Hero } from '../models/hero.model';
@@ -44,6 +44,7 @@ export class HeroService {
   private changes$ = combineLatest([this.search$, this.page$, this.limit$]);
 
   private heroResponse$ = this.changes$.pipe(
+    debounceTime(500),
     switchMap(([searchTerm, page, limit]) => {
       const params: Partial<HeroParam> = {
         apikey: process.env['NX_MARVEL_PUBLIC_KEY'] || '',
