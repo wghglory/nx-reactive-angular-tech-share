@@ -5,7 +5,7 @@
   "scripts": {
     "api": "npx nx serve api",
     "dev": "npx nx serve rx",
-    "start": "npm run api & npm run rx",
+    "start": "npm run api & npm run dev",
     "test": "npx nx run-many --all --target=test --parallel",
     "e2e": "npx nx run dp-e2e:e2e --headed=false --watch",
     "prettier": "prettier --config ./.prettierrc  --write --list-different '{apps,libs,mock}/**/*{.ts,.js,.json,.css,.scss,.md,.html}'",
