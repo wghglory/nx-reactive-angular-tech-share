@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { combineLatest, map } from 'rxjs';
 
-import { HeroService } from './../../services/hero.service';
+import { HeroReactiveService } from '../../services/hero-reactive.service';
 
 @Component({
-  selector: 'rx-hero-list',
-  templateUrl: './hero-list.component.html',
+  selector: 'rx-hero-list-reactive',
+  templateUrl: './hero-list-reactive.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroListComponent {
+export class HeroListReactiveComponent {
   // Benefits:
   // 1. less code in component
   // 2. performance due to changeDetection.OnPush
   // 3. when service changes to ngrx, component code doesn't need any change
   // 4. switchMap cancel previous requests
-  constructor(private heroService: HeroService) {}
+  constructor(private heroService: HeroReactiveService) {}
 
   // View Model to avoid too many async pipe in template
   vm$ = combineLatest([

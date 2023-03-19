@@ -43,7 +43,7 @@ interface HeroParam {
 @Injectable({
   providedIn: 'root',
 })
-export class HeroService {
+export class HeroReactiveService {
   constructor(private http: HttpClient) {}
 
   limits = LIMITS;
