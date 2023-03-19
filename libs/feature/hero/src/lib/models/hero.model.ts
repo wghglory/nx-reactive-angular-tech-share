@@ -29,3 +29,16 @@ export interface HeroSubItem {
   name: string;
   type?: string;
 }
+
+export interface HeroParam {
+  apikey: string;
+  limit: number;
+  offset: number;
+  nameStartsWith: string;
+}
+
+export interface HeroParamRaw {
+  limit: number;
+  page: number;
+  searchTerm: string;
+}

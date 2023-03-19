@@ -1,1 +1,36 @@
-<p>hero-list-imperative works!</p>
+<h2>Heroes</h2>
+
+<section class="my-6 flex items-center justify-between">
+  <clr-input-container class="mt-0 flex flex-row">
+    <label>Search</label>
+    <input clrInput class="ml-2" [value]="searchTerm" (input)="changeSearch($any($event.target).value)" />
+  </clr-input-container>
+
+  <span>
+    <label class="font-semibold">Page {{ userPage }} of {{ totalPage }} </label>
+    <span class="btn-group btn-outline ml-2">
+      <button class="btn" (click)="changePage(-1)" [disabled]="disablePrev">Prev</button>
+      <button class="btn" (click)="changePage(1)" [disabled]="disableNext">Next</button>
+    </span>
+  </span>
+
+  <span>
+    <label class="font-semibold">Page Limit</label>
+    <span class="btn-group btn-outline ml-2">
+      <button class="btn" *ngFor="let pageSize of limits" (click)="changeLimit(pageSize)" [disabled]="pageSize === limit">
+        {{ pageSize }}
+      </button>
+    </span>
+  </span>
+
+  <span>
+    <label class="font-semibold">Total Results: {{ totalResult }}</label>
+  </span>
+</section>
+
+<rx-spinner *ngIf="loading; else heroData"></rx-spinner>
+<ng-template #heroData>
+  <section class="mt-10 flex flex-wrap gap-6">
+    <rx-hero-badge *ngFor="let hero of heroes" [hero]="hero"></rx-hero-badge>
+  </section>
+</ng-template>

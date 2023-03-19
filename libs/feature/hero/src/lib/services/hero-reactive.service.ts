@@ -1,44 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  debounceTime,
-  delay,
-  distinctUntilChanged,
-  finalize,
-  map,
-  Observable,
-  of,
-  share,
-  shareReplay,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { isEqual } from 'lodash';
+import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, finalize, map, shareReplay, switchMap, tap } from 'rxjs';
 
-import { heroMockResponse } from '../mock-data';
-import { Hero } from '../models/hero.model';
+import { HeroParam } from '../models/hero.model';
 import { MarvelResponse } from '../models/marvel.model';
+import { HERO_API, LIMIT_MID, LIMITS } from '../utils/const';
 
-const HERO_API = `${process.env['NX_MARVEL_URL']}/v1/public/characters`;
-
-const LIMIT_LOW = 10;
-const LIMIT_MID = 25;
-const LIMIT_HIGH = 100;
-const LIMITS = [LIMIT_LOW, LIMIT_MID, LIMIT_HIGH];
-
-const DEFAULT_STATE = {
-  search: '',
-  page: 0,
-  limit: LIMIT_MID,
-};
-
-interface HeroParam {
-  apikey: string;
-  limit: number;
-  offset: number;
-  nameStartsWith: string;
-}
+const DEFAULT_STATE = { search: '', page: 0, limit: LIMIT_MID };
 
 @Injectable({
   providedIn: 'root',
@@ -60,7 +29,7 @@ export class HeroReactiveService {
 
   private heroResponse$ = this.changes$.pipe(
     debounceTime(500),
-    distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+    distinctUntilChanged(isEqual),
     tap(() => this.loadingBS.next(true)),
     switchMap(([searchTerm, page, limit]) => {
       const params: Partial<HeroParam> = {
@@ -72,14 +41,8 @@ export class HeroReactiveService {
         params.nameStartsWith = searchTerm;
       }
 
-      // return of(heroMockResponse).pipe(
-      //   delay(500),
-      // );
-      return this.http.get<MarvelResponse>(HERO_API, { params }).pipe(
-        finalize(() => {
-          this.loadingBS.next(false);
-        }),
-      );
+      // return of(heroMockResponse).pipe(delay(500));
+      return this.http.get<MarvelResponse>(HERO_API, { params }).pipe(finalize(() => this.loadingBS.next(false)));
     }),
     shareReplay(1),
   );
@@ -90,25 +53,14 @@ export class HeroReactiveService {
   totalPage$ = combineLatest([this.totalResult$, this.limit$]).pipe(map(([total, limit]) => Math.ceil(total / limit)));
 
   changeSearch(search: string) {
-    this.stateBS.next({
-      ...this.stateBS.value,
-      search,
-      page: 0,
-    });
+    this.stateBS.next({ ...this.stateBS.value, search, page: 0 });
   }
 
   changePage(moveBy: number) {
-    this.stateBS.next({
-      ...this.stateBS.value,
-      page: this.stateBS.value.page + moveBy,
-    });
+    this.stateBS.next({ ...this.stateBS.value, page: this.stateBS.value.page + moveBy });
   }
 
   changeLimit(limit: number) {
-    this.stateBS.next({
-      ...this.stateBS.value,
-      limit,
-      page: 0,
-    });
+    this.stateBS.next({ ...this.stateBS.value, limit, page: 0 });
   }
 }
