@@ -3,6 +3,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  "editor.lineNumbers": "on",
   "fileheader.customMade": {
     "custom_string_obkoro1_copyright": "****************************************************\n* Copyright ${now_year} VMware, Inc. All rights reserved. *\n****************************************************"
   },

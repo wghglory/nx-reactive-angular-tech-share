@@ -1,18 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { isEqual } from 'lodash';
-import {
-  BehaviorSubject,
-  combineLatest,
-  debounceTime,
-  distinctUntilChanged,
-  finalize,
-  map,
-  shareReplay,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, finalize, map, shareReplay, startWith, switchMap, tap } from 'rxjs';
 
 import { HeroParam } from '../models/hero.model';
 import { MarvelResponse } from '../models/marvel.model';

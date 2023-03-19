@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { combineLatest, map } from 'rxjs';
 
 import { HeroReactiveService } from '../../services/hero-reactive.service';
+import { LIMITS } from '../../utils/const';
 
 @Component({
   selector: 'rx-hero-list-reactive',
@@ -38,7 +39,7 @@ export class HeroListReactiveComponent {
         totalResult,
         disablePrev: page === 0,
         disableNext: page + 1 === totalPage,
-        limits: this.heroService.limits,
+        limits: LIMITS,
         loading,
       };
     }),
