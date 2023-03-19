@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { Hero, HeroParamRaw } from '../../models/hero.model';
@@ -9,6 +9,7 @@ import { LIMIT_MID, LIMITS } from '../../utils/const';
   selector: 'rx-hero-list-imperative',
   templateUrl: './hero-list-imperative.component.html',
   styleUrls: ['./hero-list-imperative.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush, // usually won't work for imperative code
 })
 export class HeroListImperativeComponent implements OnInit, OnDestroy {
   constructor(private heroService: HeroImperativeService) {}
@@ -41,6 +42,7 @@ export class HeroListImperativeComponent implements OnInit, OnDestroy {
   private getHeroes(params: HeroParamRaw = { limit: LIMIT_MID, page: 0, searchTerm: '' }) {
     this.loading = true;
 
+    // hard to handle race condition, such as cancel previous requests, no debounce
     this.heroService
       .getHeroes(params)
       .pipe(takeUntil(this.destroy$))

@@ -6,6 +6,7 @@ import { HeroReactiveService } from '../../services/hero-reactive.service';
 @Component({
   selector: 'rx-hero-list-reactive',
   templateUrl: './hero-list-reactive.component.html',
+  providers: [HeroReactiveService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroListReactiveComponent {

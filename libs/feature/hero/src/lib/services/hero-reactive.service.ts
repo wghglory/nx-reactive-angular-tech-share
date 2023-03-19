@@ -1,7 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { isEqual } from 'lodash';
-import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, finalize, map, shareReplay, switchMap, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  finalize,
+  map,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 import { HeroParam } from '../models/hero.model';
 import { MarvelResponse } from '../models/marvel.model';
@@ -9,16 +20,14 @@ import { HERO_API, LIMIT_MID, LIMITS } from '../utils/const';
 
 const DEFAULT_STATE = { search: '', page: 0, limit: LIMIT_MID };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class HeroReactiveService {
   constructor(private http: HttpClient) {}
 
   limits = LIMITS;
 
   private stateBS = new BehaviorSubject(DEFAULT_STATE);
-  private loadingBS = new BehaviorSubject(false);
+  private loadingBS = new BehaviorSubject(true);
 
   search$ = this.stateBS.pipe(map(state => state.search));
   page$ = this.stateBS.pipe(map(state => state.page));
@@ -48,9 +57,18 @@ export class HeroReactiveService {
   );
 
   // derived states, like ngrx selector
-  heroes$ = this.heroResponse$.pipe(map(res => res.data.results));
-  totalResult$ = this.heroResponse$.pipe(map(res => res.data.total));
-  totalPage$ = combineLatest([this.totalResult$, this.limit$]).pipe(map(([total, limit]) => Math.ceil(total / limit)));
+  heroes$ = this.heroResponse$.pipe(
+    map(res => res.data.results),
+    startWith([]),
+  );
+  totalResult$ = this.heroResponse$.pipe(
+    map(res => res.data.total),
+    startWith(0),
+  );
+  totalPage$ = combineLatest([this.totalResult$, this.limit$]).pipe(
+    map(([total, limit]) => Math.ceil(total / limit)),
+    startWith(0),
+  );
 
   changeSearch(search: string) {
     this.stateBS.next({ ...this.stateBS.value, search, page: 0 });
