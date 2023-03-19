@@ -15,7 +15,6 @@ export class HeroListReactiveComponent {
   // 1. less code in component
   // 2. performance due to changeDetection.OnPush
   // 3. when service changes to ngrx, component code doesn't need any change
-  // 4. switchMap cancel previous requests
   constructor(private heroService: HeroReactiveService) {}
 
   // View Model to avoid too many async pipe in template
@@ -45,6 +44,7 @@ export class HeroListReactiveComponent {
     }),
   );
 
+  // just emit the relevant value to service. No need to manually call getHeroes
   changeSearch(searchTerm: string) {
     this.heroService.changeSearch(searchTerm);
   }

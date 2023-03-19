@@ -29,6 +29,7 @@ export class HeroReactiveService {
     debounceTime(500),
     distinctUntilChanged(isEqual),
     tap(() => this.loadingBS.next(true)),
+    // switchMap cancel previous requests, hard if using imperative programming
     switchMap(([searchTerm, page, limit]) => {
       const params: Partial<HeroParam> = {
         apikey: process.env['NX_MARVEL_PUBLIC_KEY'] || '',

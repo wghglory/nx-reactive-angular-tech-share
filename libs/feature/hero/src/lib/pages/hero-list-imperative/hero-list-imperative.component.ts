@@ -16,7 +16,7 @@ export class HeroListImperativeComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  limits = LIMITS; // 10, 25, 100
+  limits = LIMITS; // [10, 25, 100]
 
   searchTerm = '';
   page = 0;
@@ -48,6 +48,7 @@ export class HeroListImperativeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: res => {
+          // save data when successful
           this.heroes = res.data.results;
           this.totalResult = res.data.total;
           this.totalPage = Math.ceil(this.totalResult / this.limit);
@@ -60,7 +61,10 @@ export class HeroListImperativeComponent implements OnInit, OnDestroy {
       });
   }
 
+  // every time when you search, not only saving searchTerm, but also call getHero explicitly
+  // suppose we need another new input like advancedSearch, we'd have to refactor getHeroes
   changeSearch(searchTerm: string) {
+    // these variables will make functions impure, effecting the output of the other functions
     this.searchTerm = searchTerm;
     this.page = 0;
     this.getHeroes({ limit: this.limit, page: this.page, searchTerm });
